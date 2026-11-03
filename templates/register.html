@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Citizen Registration | CarePoint HMS</title><link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}"></head>
+<body class="login-page"><section class="login-card register-card"><h1>CarePoint HMS</h1><p>Create your citizen account</p>
+{% with messages=get_flashed_messages(with_categories=true) %}{% for c,m in messages %}<div class="alert {{ c }}">{{ m }}</div>{% endfor %}{% endwith %}
+<form method="post"><input type="hidden" name="_csrf" value="{{ csrf_token }}">
+<label>Full name<input name="name" maxlength="120" required value="{{ request.form.get('name','') }}"></label>
+<label>Username<input name="username" minlength="3" maxlength="80" required value="{{ request.form.get('username','') }}"></label>
+<label>Email<input type="email" name="email" maxlength="150" value="{{ request.form.get('email','') }}"></label>
+<label>Phone<input type="tel" name="phone" maxlength="20" value="{{ request.form.get('phone','') }}"></label>
+<label>Address<textarea name="address" rows="2">{{ request.form.get('address','') }}</textarea></label>
+<label>Date of birth<input type="date" name="date_of_birth" value="{{ request.form.get('date_of_birth','') }}"></label>
+<label>Gender<select name="gender"><option>Other</option><option>Male</option><option>Female</option></select></label>
+<label>Password (at least 8 characters)<input type="password" name="password" minlength="8" required autocomplete="new-password"></label>
+<label>Confirm password<input type="password" name="confirm_password" minlength="8" required autocomplete="new-password"></label>
+<button class="button" type="submit">Create citizen account</button></form>
+<p class="register-prompt"><a href="{{ url_for('login') }}">Back to sign in</a></p><p class="register-note">Registration is for citizens only. Doctor and staff accounts must be created by an administrator.</p></section></body></html>

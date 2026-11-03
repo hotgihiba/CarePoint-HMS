@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block heading %}Database connection issue{% endblock %}{% block content %}<section class="panel"><h2>Unable to connect to MySQL</h2><p>{{ message }}</p><p>Check that MySQL Server is running and your .env values match your local setup. Then refresh this page.</p><a class="button" href="{{ url_for('dashboard') }}">Try again</a></section>{% endblock %}

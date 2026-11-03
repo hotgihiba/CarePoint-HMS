@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}{{ 'Edit' if editing else 'Add' }} {{ meta.title }} · CarePoint{% endblock %}{% block heading %}{{ 'Edit' if editing else 'Add' }} {{ meta.title }}{% endblock %}
+{% block content %}<section class="form-panel"><form method="post" class="record-form"><input type="hidden" name="_csrf" value="{{ csrf_token }}">
+{% for f in fields %}<label class="field"><span>{{ f.label }}{% if f.required %}<b class="required">*</b>{% endif %}</span>
+{% if f.kind.startswith('fk:') %}<select name="{{ f.name }}" {% if f.required %}required{% endif %}><option value="">Choose {{ f.label|lower }}</option>{% for o in f.options %}<option value="{{ o.id }}" {% if f.value|string == o.id|string %}selected{% endif %}>{{ o.label }}</option>{% endfor %}</select>
+{% elif f.kind.startswith('select:') %}<select name="{{ f.name }}" {% if f.required %}required{% endif %}><option value="">Choose...</option>{% for opt in f.kind[7:].split(',') %}<option value="{{ opt }}" {% if f.value|string == opt %}selected{% endif %}>{{ opt }}</option>{% endfor %}</select>
+{% elif f.kind == 'textarea' %}<textarea name="{{ f.name }}" rows="3" {% if f.required %}required{% endif %}>{{ f.value or '' }}</textarea>
+{% else %}<input name="{{ f.name }}" type="{{ f.kind }}" value="{{ '' if f.kind=='password' else (f.value or '') }}" {% if f.required %}required{% endif %} {% if f.kind=='number' %}min="0"{% endif %} placeholder="{{ 'Leave blank to keep current password' if f.kind=='password' and editing else '' }}>{% endif %}
+</label>{% endfor %}
+<div class="form-actions"><a class="button secondary" href="{{ url_for('list_records',table=table) }}">Cancel</a><button class="button" type="submit">{{ 'Save changes' if editing else 'Create record' }}</button></div>
+</form></section>{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block heading %}Reports & analytics<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const labels = [{% for r in status %}{{ r.status|tojson }}{% if not loop.last %},{% endif %}{% endfor %}];
+const values = [{% for r in status %}{{ r.total }}{% if not loop.last %},{% endif %}{% endfor %}];
+new Chart(document.getElementById('appointmentStatus'), {
+  type:'doughnut', data:{labels:labels,datasets:[{data:values}]},
+  options:{responsive:true,plugins:{legend:{position:'bottom'}}}
+});
+</script>
+{% endblock %}{% block content %}<div class="toolbar"><p class="intro">Live summaries from MySQL.</p><button class="button" onclick="window.print()">Print report</button></div><section class="stats">{% for k,v in counts.items() %}<div class="stat-card"><span>{{ modules[k].title }}</span><strong>{{ v }}</strong></div>{% endfor %}</section><section class="panel"><h2>Appointment analytics</h2><canvas id="appointmentStatus" height="100"></canvas></section><section class="panel"><h2>Appointments by status</h2><table><thead><tr><th>Status</th><th>Count</th></tr></thead><tbody>{% for r in status %}<tr><td>{{ r.status }}</td><td>{{ r.total }}</td></tr>{% endfor %}</tbody></table></section><section class="panel"><h2>Monthly appointments</h2><table><thead><tr><th>Month</th><th>Appointments</th></tr></thead><tbody>{% for r in monthly %}<tr><td>{{ r.month }}</td><td>{{ r.total }}</td></tr>{% endfor %}</tbody></table></section><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const labels = [{% for r in status %}{{ r.status|tojson }}{% if not loop.last %},{% endif %}{% endfor %}];
+const values = [{% for r in status %}{{ r.total }}{% if not loop.last %},{% endif %}{% endfor %}];
+new Chart(document.getElementById('appointmentStatus'), {
+  type:'doughnut', data:{labels:labels,datasets:[{data:values}]},
+  options:{responsive:true,plugins:{legend:{position:'bottom'}}}
+});
+</script>
+{% endblock %}

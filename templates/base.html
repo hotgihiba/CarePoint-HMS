@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}CarePoint HMS{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">✚</span><span>CarePoint<small>HOSPITAL MANAGEMENT</small></span></a>
+  <nav><a href="{{ url_for('dashboard') }}">▦ &nbsp; Dashboard</a><a href="{{ url_for('module_index') }}">▤ &nbsp; All modules</a>
+  <a href="{{ url_for('calendar') }}">Appointment calendar</a>{% if current_role != "citizen" %}<a href="{{ url_for('reports') }}">Reports</a>{% endif %}<div class="nav-label">MANAGEMENT</div>
+  {% for key, item in modules.items() %}{% if key in role_modules %}<a href="{{ url_for('list_records', table=key) }}">{{ item.title }}</a>{% endif %}{% endfor %}
+  </nav>
+  <div class="sidebar-foot">CarePoint HMS · Local system</div>
+</aside>
+<main class="main">
+<header class="topbar"><div><span class="eyebrow">HOSPITAL OPERATIONS</span><h1>{% block heading %}Dashboard{% endblock %}</h1></div><div class="user-tools"><span>{{ current_user }} · {{ current_role|title }}</span><form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="_csrf" value="{{ csrf_token }}"><button class="button secondary" type="submit">Logout</button></form></div></header>
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="alerts">{% for category,message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+<footer>CarePoint Hospital Management System</footer>
+</main></div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body></html>

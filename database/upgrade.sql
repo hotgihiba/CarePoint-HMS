@@ -1,0 +1,5 @@
+-- No upgrade script is required for the ERD-only version of CarePoint HMS.
+-- The application uses the original 14 entities only.
+-- Citizen credentials are stored in citizen.password_hash.
+-- Administrator credentials are configured in the .env file.
+-- Staff operations are performed by the administrator; the ERD has no staff login fields.

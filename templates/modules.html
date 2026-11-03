@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block title %}Modules · CarePoint{% endblock %}{% block heading %}Your workspace{% endblock %}
+{% block content %}<p class="intro">Choose a section available to your account role.</p><div class="module-grid">{% for key,item in modules.items() %}{% if key in role_modules %}<a class="module-card" href="{{ url_for('list_records',table=key) }}"><span class="module-icon">▦</span><strong>{{ item.title }}</strong><small>Open {{ item.title|lower }} →</small></a>{% endif %}{% endfor %}</div>{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Dashboard · CarePoint{% endblock %}{% block heading %}Dashboard{% endblock %}
+{% block content %}
+<section class="welcome"><div><span class="eyebrow light">WELCOME BACK</span><h2>Hospital overview</h2><p>Manage patient records, appointments, clinical services and hospital resources.</p></div><a class="button white" href="{{ url_for('module_index') }}">Open modules →</a></section>
+<div class="stats">{% for key,item in modules.items() %}<a class="stat-card" href="{{ url_for('list_records',table=key) }}"><span>{{ item.title }}</span><strong>{{ counts.get(key,'—') }}</strong><small>View records →</small></a>{% endfor %}</div>
+<section class="panel"><div class="panel-head"><div><span class="eyebrow">SCHEDULE</span><h2>Recent appointments</h2></div><a class="button" href="{{ url_for('create_record',table='appointment') }}">＋ New appointment</a></div>
+{% if recent %}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Citizen</th><th>Doctor</th><th>Date</th><th>Status</th></tr></thead><tbody>{% for r in recent %}<tr><td>#{{ r.appointment_id }}</td><td>{{ r.citizen or '—' }}</td><td>{{ r.doctor or '—' }}</td><td>{{ r.appointment_date }}</td><td><span class="pill">{{ r.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">No appointments yet, or database tables are not initialized.</p>{% endif %}</section>
+{% endblock %}
